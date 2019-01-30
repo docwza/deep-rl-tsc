@@ -133,6 +133,8 @@ class LearnerProc(Process):
         self.last_update = time.time()
         period = 60
 
+        self.learn_time = time.time()
+
         if self.args.mode == 'train':
             ###reset n_exp count
             for agent in self.agent_ids:
@@ -140,7 +142,7 @@ class LearnerProc(Process):
 
             while not self.finished_learning():                                                
                 for tsc in rl_agents:                                                         
-                    ###only do batch updates after something been added to exp replay
+                    ###only do batch updates after something has been added to exp replay
                     if self.rl_stats[tsc]['n_exp'] > 0:
                         rl_agents[tsc].train_batch( self.rl_stats[tsc]['max_r'])
                         self.rl_stats[tsc]['n_exp'] -= 1
@@ -160,10 +162,23 @@ class LearnerProc(Process):
                 ###try stats
                 t = time.time() - self.last_update
                 if t > period:
-                    print('========= AGENT EXP PROGRESS UPDATE =====')
+                    print('========= AGENT EXP PROGRESS UPDATE LEARNER '+str(self.idx)+' =====')
                     self.print_stats()
                     self.last_update = time.time()
+                    T = time.time()-self.learn_time
+                    ###use min progress agent as the ETA estimate p
+                    min_progress = min([ self.rl_stats[agent]['updates']/float(self.args.updates) for agent in self.agent_ids])
+                    eta = self.ETA( min_progress, T )
+                    print('==== ETA seconds: '+str( round(eta, 0) )+' minutes: '+str( round(eta/60.0, 2) )+' hours: '+str( round(eta/3600.0, 2) )+' ====')
+                    #print(str(ETA( np.amin([ self.rl_stats[agent]['updates']/float(self.args.updates for agent in self.agent_ids])), T))
         print('...end learner '+str(self.idx))
+
+
+    def ETA(self, p, t):
+        if p == 0.0:
+            return 0.0
+        else:
+            return ((1.0/p)*t)*(1.0-p)
 
     def print_stats(self):
         agent_progress = []
