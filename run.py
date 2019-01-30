@@ -1,14 +1,11 @@
-import argparse
+import argparse, os, itertools, time
 import numpy as np
-import itertools
-import time
-
 from DistProcs import DistProcs
 
 def parse_cl_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-nogui", default=False, action='store_true', dest='nogui', help='disable gui, default: False')
-    parser.add_argument("-actor", type=int, default=1, dest='n_actors', help='number of actor procs (parallel simulations) generating experiences, default: 1')
+    parser.add_argument("-actor", type=int, default=os.cpu_count()-1, dest='n_actors', help='number of actor procs (parallel simulations) generating experiences, default: os.cpu_count()-1')
     parser.add_argument("-learner", type=int, default=1, dest='n_learners', help='number of learner procs (parallel simulations) producing updates, default: 1')
 
     parser.add_argument("-sumocfg", type=str, default='net.sumocfg', dest='sumo_cfg', help='path to desired simulation configuration file, default: net.sumocfg' )
@@ -22,7 +19,7 @@ def parse_cl_args():
     parser.add_argument("-shist", type=int, default=1, dest='s_hist')
     parser.add_argument("-lr", type=float, default=0.0001, dest='lr', help='neural network learning rate, default: 0.0001')
     #parser.add_argument("-nn", type=str, default='conv', dest='nn')
-    parser.add_argument("-eps", type=float, default=1.0, dest='eps', help='q-learning exploration rate, default: 1.0'  )
+    parser.add_argument("-eps", type=float, default=0.05, dest='eps', help='q-learning exploration rate, default: 0.05'  )
     parser.add_argument("-gamma", type=float, default=0.99, dest='gamma', help='reinforcement learning discount factor, default: 0.99')
     parser.add_argument("-lre", type=float, default=0.00000001, dest='lre', help='neural network learning rate epsilon, default: 0.00000001')
 

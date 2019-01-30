@@ -30,7 +30,7 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 
 - [Python](https://www.python.org/) 3.6
 - [Ubuntu](https://www.ubuntu.com/) 18
-- [Sumo 1.1.0](https://sourceforge.net/projects/sumo/)
+- [Sumo](https://sourceforge.net/projects/sumo/) 1.1.0
 - [Tensorflow](https://www.tensorflow.org/) 1.12 (optimized builds [here](https://github.com/lakshayg/tensorflow-build))
 - [SciPy](https://www.scipy.org/)
 - [Keras](https://keras.io/) 2.2.4
@@ -43,7 +43,7 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 python run.py -save -mode train
 ```
 
-To learn more about all input parameters, run `python run.py --help`. The only input arguments to run the default network that need be changed (hardware dependent) are `-actor`, `-learner` and `-eps`.
+To learn more about all input arguments, run `python run.py --help`.
 
 After training has completed, execute:
 
