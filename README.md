@@ -58,7 +58,7 @@ to create a visualization of actors with different action explortation rates, si
 ### Testing
 
 ```
-python run.py -load - mode test
+python run.py -load -mode test
 ```
 
 
