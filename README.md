@@ -65,7 +65,7 @@ python run.py -load -mode test -actor 1 -learner 1
 
 ## Overview
 
-This framework takes a SUMO network simulation and develops deep reinforcement learning agents for each signalised intersection to act as optimal signal controllers. A [distributed actor/learner architecture](https://arxiv.org/abs/1803.00933) implemented with Python multiprocessing enables hardware scalability scalability. This research implements [n-step Q-learning](https://arxiv.org/abs/1602.01783), an off-policy, valued based form of reinforcement learning. 
+This framework takes a SUMO network simulation and develops deep reinforcement learning agents for each signalised intersection to act as optimal signal controllers. A [distributed actor/learner architecture](https://arxiv.org/abs/1803.00933) implemented with Python multiprocessing enables hardware scalability. This research implements [n-step Q-learning](https://arxiv.org/abs/1602.01783), an off-policy, valued based form of reinforcement learning. 
 
 
 ### Simulation
@@ -78,7 +78,7 @@ and the second (default) with two intersections:
 
 ![Screenshot](doc/double.png)
 
-Vehicles generation is implemented in Vehicle.py class. Vehicles are generated uniform randomly over origin edges with their departure times into the network modelled as a Poisson process. SUMO subscriptions are used to optimize performance accessing vehicle data. Yellow and red phases when tranisition the traffic signal between conflicting green phases, their duration controlled by `-yellow 4 -red 4`.
+Vehicle generation is implemented in Vehicle.py class. Vehicles are generated uniform randomly over origin edges with their departure times into the network modelled as a Poisson process. SUMO subscriptions are used to optimize performance accessing vehicle data. Yellow and red phases when tranisition the traffic signal between conflicting green phases, their duration controlled by `-yellow 4 -red 4`.
 
 ### Reinforcement Learning
 
