@@ -92,3 +92,7 @@ In `-mode train` the actors first execute until all experience replays are fille
 ## Help
 
 Consult the [SUMO Wiki](http://sumo.dlr.de/wiki/Simulation_of_Urban_MObility_-_Wiki) and [API docs](http://www.sumo.dlr.de/pydoc/traci.html) for additional help.
+
+## Additional Resources
+
+[Some of my other](https://scholar.google.ca/citations?user=UDIdK_wAAAAJ&hl=en&oi=ao) reinforcement learning traffic signal control research.
