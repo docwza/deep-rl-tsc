@@ -35,15 +35,23 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 - [SciPy](https://www.scipy.org/)
 - [Keras](https://keras.io/) 2.2.4
 
-##Running the code
+## Running the code
 
-###Training
+### Training
 
 ```
 python run.py -save -mode train
 ```
 
-###Testing
+To learn more about all input parameters, run `python run.py --help`.
+
+After training has completed, execute:
+
+```
+python graph_actors.py
+```
+
+### Testing
 
 ```
 python run.py -load - mode test
