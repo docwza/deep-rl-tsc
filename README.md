@@ -55,6 +55,8 @@ to create a visualization of actors with different action explortation rates, si
 
 ![Screenshot](doc/graph_actors.png)
 
+When training, optimal execution requires balancing the number of parallel actors `-actor` and learners `-learner`. A simulation with a single intersection can be left at the default settings (i.e., 1 learner and the rest actors). As the number of signalised intersections in the network increases, more learners will be required. Agents are distributed to learners in an approximately equal fashion; each learner is responsible to perform batch updates for their assigned subset of agents (i.e., a network with 13 signalised intersections and 3 learners would allocate 4, 4 and 5 intersections to the learners). Each actor is assigned an epsilon greedy exploration policy from equal spaced intervals between a random policy and a defined greedy policy `-eps 0.05` (e.g., with 4 actors and `-eps 0.05`, the actors are implement one of (1.0, 0.68, 0.37, 0.05] epsilon greedy policies).
+
 ### Testing
 
 To watch learned agents, execute:
@@ -70,7 +72,7 @@ This framework takes a SUMO network simulation and develops deep reinforcement l
 
 ### Simulation
 
-Two simple SUMO simulations are included, the first (`-netfp single.net.xml -sumocfg single.sumocfg`) with a single intersection:
+Two simple SUMO simulations are included, the first (`-netfp networks/single.net.xml -sumocfg networks/single.sumocfg`) with a single intersection:
 
 ![Screenshot](doc/single.png)
 

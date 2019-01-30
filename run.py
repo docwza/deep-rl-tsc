@@ -8,10 +8,10 @@ def parse_cl_args():
     parser.add_argument("-actor", type=int, default=os.cpu_count()-1, dest='n_actors', help='number of actor procs (parallel simulations) generating experiences, default: os.cpu_count()-1')
     parser.add_argument("-learner", type=int, default=1, dest='n_learners', help='number of learner procs (parallel simulations) producing updates, default: 1')
 
-    parser.add_argument("-sumocfg", type=str, default='double.sumocfg', dest='sumo_cfg', help='path to desired simulation configuration file, default: double.sumocfg' )
+    parser.add_argument("-sumocfg", type=str, default='networks/double.sumocfg', dest='sumo_cfg', help='path to desired simulation configuration file, default: networks/double.sumocfg' )
     parser.add_argument("-port", type=int, default=9000, dest='port', help='sumo port, default: 9000' )
     parser.add_argument("-simlen", type=int, default=7200, dest='sim_len', help='length of simulation in seconds/steps')
-    parser.add_argument("-netfp", type=str, default='double.net.xml', dest='net_fp', help='path to desired simulation network file, default: double.net.xml')
+    parser.add_argument("-netfp", type=str, default='networks/double.net.xml', dest='net_fp', help='path to desired simulation network file, default: networks/double.net.xml')
     parser.add_argument("-scale", type=float, default=1.0, dest='scale', help='automatic flow scaling parameter (i.e., >1.0, more vehicles, default: 1.0')
 
 
