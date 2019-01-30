@@ -40,6 +40,8 @@ class ActorProc(Process):
         print('...starting actor '+str(self.idx))
         agents = [tsc for tsc in self.net_data['tsc']]
         print(agents)
+        print('ACTOR neural networks')
+        print('ACTOR neural networks')
         agent_networks = gen_neural_networks(agents, self.net_data, self.args.hact, self.args.oact, self.args.lr, self.args.lre)
 
         self.barrier.wait()
@@ -50,21 +52,30 @@ class ActorProc(Process):
         port = self.args.port + self.idx
         sim = SumoSim(port, self.idx, self.args.sumo_cfg)
 
-        ###fill exp replays of all agents
-        while not self.replays_full(agents):
-            sim.gen_sim(self.args.nogui, self.args.sim_len)                                             
-            ###run the sim until completion, pass in neural network here
-            sim.run(self.net_data, self.args, self.exp_replay, agent_networks, self.eps, self.rl_stats)
+        if self.args.mode == 'test':
+            print('---- Running test sims ----')
+            for _ in range(1):
+                sim.gen_sim(self.args.nogui, self.args.sim_len)                                             
+                ###run the sim until completion, pass in neural network here                                        
+                sim.run(self.net_data, self.args, self.exp_replay, agent_networks, self.eps, self.rl_stats)         
+            self.barrier.wait()
 
-        print('------- finished filling exp replays, start learning ---------')
+        elif self.args.mode == 'train':
+            print('---- Running train sims ----')
+            ###fill exp replays of all agents
+            while not self.replays_full(agents):
+                sim.gen_sim(self.args.nogui, self.args.sim_len)                                             
+                ###run the sim until completion, pass in neural network here
+                sim.run(self.net_data, self.args, self.exp_replay, agent_networks, self.eps, self.rl_stats)
 
-        self.barrier.wait()
+            print('------- finished filling exp replays, start learning ---------')
+            self.barrier.wait()
 
-        ###keep acting until sufficient updates from learners
-        while not self.finished_acting(agents):
-            sim.gen_sim(self.args.nogui, self.args.sim_len)                                             
-            ###run the sim until completion, pass in neural network here
-            sim.run(self.net_data, self.args, self.exp_replay, agent_networks, self.eps, self.rl_stats)
+            ###keep acting until sufficient updates from learners
+            while not self.finished_acting(agents):
+                sim.gen_sim(self.args.nogui, self.args.sim_len)                                             
+                ###run the sim until completion, pass in neural network here                                        
+                sim.run(self.net_data, self.args, self.exp_replay, agent_networks, self.eps, self.rl_stats)         
 
         print('...end actor '+str(self.idx))
 
@@ -94,6 +105,7 @@ class LearnerProc(Process):
 
     def run(self):
         ####loop thru agents
+        print('LEARNER neural networks')
         agent_networks = gen_neural_networks([tsc for tsc in self.agent_ids], self.net_data, self.args.hact, self.args.oact, self.args.lr, self.args.lre)
 
         ###load weights if we want

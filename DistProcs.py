@@ -24,8 +24,6 @@ class DistProcs():
             ###when testing, all actors have same exploration rate
             actor_eps = [args.eps for _ in range(n_actors)]
 
-        print('Actor epsilons '+str(actor_eps))
-
         ##NetworkData is a dict of information about elements of the simulation network (e.g., lanes, edges, intersections)
         if args.load == True:
             ###read saved dictionary
@@ -95,7 +93,6 @@ class DistProcs():
         print('...finishing DistProcs')
     
     def assign_learner_agents(self, agents, n_learners):
-        #even = math.floor(len(agents)/n_learners)
         learner_agents = [ [] for _ in range(n_learners)]
         i = 0
         for agent in agents:
