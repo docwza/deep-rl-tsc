@@ -86,3 +86,7 @@ The n-step Q-learnig algorithm is used to train agents to implement acyclic, ada
 
 In `-mode train` the actors first execute until all experience replays are filled `-replay 10 000`. Then actors continue to generate trajectories until learners perform sufficient batch updates `-updates 10000`. In `-mode test` the actors execute 1 simulation. 
 
+
+## Help
+
+Consult the [SUMO Wiki](http://sumo.dlr.de/wiki/Simulation_of_Urban_MObility_-_Wiki) and [API docs](http://www.sumo.dlr.de/pydoc/traci.html) for additional help.
