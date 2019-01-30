@@ -26,7 +26,7 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 
 ## Installation
 
-### Requirements
+### Dependancies
 
 - [Python](https://www.python.org/) 3.6
 - [Ubuntu](https://www.ubuntu.com/) 18
@@ -62,4 +62,8 @@ To watch learned agents, execute:
 ```
 python run.py -load -mode test -actor 1 -learner 1
 ```
+
+## Overview
+
+This framework takes a SUMO network simulation and develops deep reinforcement learning agents for each signalised intersection to act as optimal signal controllers. A [distributed actor/learner architecture](https://arxiv.org/abs/1803.00933) implemented with Python multiprocessing enables hardware scalability scalability. This research implements [n-step Q-learning](https://arxiv.org/abs/1602.01783), an off-policy, valued based form of reinforcement learning. 
 
