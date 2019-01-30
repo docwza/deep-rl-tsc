@@ -6,7 +6,7 @@ Distributed deep reinforcement learning traffic signal control framework for [SU
 
 [YouTube Video Demo](https://youtu.be/Oyz2eHNmrak)
 
-If you use this research, please include the following reference:
+If you use this research, please include the following [research reference](https://doi.org/10.1080/15472450.2018.1491003):
 
 ```
 @article{doi:10.1080/15472450.2018.1491003,
