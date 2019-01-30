@@ -43,13 +43,17 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 python run.py -save -mode train
 ```
 
-To learn more about all input parameters, run `python run.py --help`.
+To learn more about all input parameters, run `python run.py --help`. The only input arguments to run the default network that need be changed (hardware dependent) are `-actor`, `-learner` and `-eps`.
 
 After training has completed, execute:
 
 ```
 python graph_actors.py
 ```
+
+to create a visualization of actors with different action explortation rates, similar to:
+
+![Screenshot](doc/graph_actors.png)
 
 ### Testing
 

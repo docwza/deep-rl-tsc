@@ -9,11 +9,7 @@ def get_actor_data():
     for csv in actor_csv:
         ###use exploration rate as the key, truncate because its a float
         explore_rate = csv.split('.csv')[0][:4]
-        #actor_data[explore_rate] = np.genfromtxt(csv, delimiter=',')[:,0]
         actor_data[explore_rate] = np.genfromtxt(csv, delimiter=',')
-        #print(csv)
-        #print(actor_data[explore_rate].shape)
-        #print(actor_data[explore_rate])
     return actor_data
 
 def graph_actor_data(data):
