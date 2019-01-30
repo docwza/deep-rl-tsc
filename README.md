@@ -8,6 +8,7 @@ Distributed deep reinforcement learning traffic signal control framework for [SU
 
 If you use this research, please include the following reference:
 
+```
 @article{doi:10.1080/15472450.2018.1491003,
 author = {Wade Genders and Saiedeh Razavi},
 title = {Asynchronous n-step Q-learning adaptive traffic signal control},
@@ -21,7 +22,7 @@ doi = {10.1080/15472450.2018.1491003},
 URL = {https://doi.org/10.1080/15472450.2018.1491003},
 eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 }
-
+```
 
 ## Installation
 
@@ -35,6 +36,7 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 - [Keras](https://keras.io/) 2.2.4
 
 ##Running the code
+
 ###Training
 
 ```
