@@ -11,6 +11,5 @@ class Intersection():
             self.tsc = RLTrafficSignalController( _id, tsc_data, conn, args, exp_replay, neural_networks, eps, rl_stats, reward )
 
     def run(self, lane_vehicles):
-        ###get traffic data, reward data perhaps?
-        ###run traffic signal controller
+        ###get traffic data, run traffic signal controller
         self.tsc.run(lane_vehicles)

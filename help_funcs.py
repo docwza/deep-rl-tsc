@@ -23,7 +23,8 @@ def action_state_lanes( actions, index_to_lane):
 def get_density(lane_vehs, lanes, lane_lengths, v_len):
     density = np.array([float(len(lane_vehs[lane])) for lane in lanes])
     length_normalizer = np.array([ lane_lengths[lane] for lane in lanes])
-    density /= ( length_normalizer /v_len)
+    ###vehicles in lane/lane vehicle capacity
+    density /= (length_normalizer/v_len)
     return density
 
 def save_data(fp, data):

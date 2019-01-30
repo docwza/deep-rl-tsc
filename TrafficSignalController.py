@@ -7,7 +7,6 @@ try:
 except ImportError:
     sys.exit("please declare environment variable 'SUMO_HOME' as the root directory of your sumo installation (it should contain folders 'bin', 'tools' and 'docs')")
 
-###now can import SUMO traci module
 import traci
 import numpy as np
 from RLAgent import RLAgent
@@ -35,6 +34,8 @@ class TrafficSignalController(object):
     def run(self, local_obs):
         ###ultimately must either keep current phase (the no action, dont change) OR
         ###supply new phase (the change action)
+        ###temporally it infinitely counts down -1 steps
+        ###timer reset when new phase enacted
 
         self.update(local_obs)
 

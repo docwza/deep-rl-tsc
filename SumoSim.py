@@ -73,6 +73,7 @@ class SumoSim():
             tsc_data[tsc]['int_to_action'] = phases
             tsc_data[tsc]['phase_one_hot'] = input_to_one_hot(phases+[tsc_data[tsc]['all_red']])
             tsc_data[tsc]['int_to_phase'] = int_to_input(phases+[tsc_data[tsc]['all_red']])
+            ###lane lengths for normalization
             tsc_data[tsc]['lane_lengths'] = { l:self.conn.lane.getLength(l) for l in lanes }
 
         return tsc_data
@@ -80,7 +81,7 @@ class SumoSim():
     def run(self, net_data, args, exp_replay, neural_network, eps, rl_stats ):
         ###for batch vehicle data, faster than API calls
         data_constants = [traci.constants.VAR_SPEED, traci.constants.VAR_POSITION , traci.constants.VAR_LANE_ID, traci.constants.VAR_LANE_INDEX]
-        self.vehicles = Vehicles(self.conn, data_constants, net_data, self.sim_len, args.demand)
+        self.vehicles = Vehicles(self.conn, data_constants, net_data, self.sim_len, args.demand, args.scale)
 
         ###create some intersections
         intersections = [ Intersection(_id, args.tsc, self.conn, args, net_data['tsc'][_id], exp_replay[_id], neural_network[_id], eps, rl_stats[_id], self.vehicles.get_edge_delay ) for _id in self.conn.trafficlight.getIDList()]

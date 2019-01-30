@@ -40,7 +40,7 @@ eprint = {https://doi.org/10.1080/15472450.2018.1491003}
 ### Training
 
 ```
-python run.py -save -mode train
+python run.py -nogui -save -mode train
 ```
 
 To learn more about all input arguments, run `python run.py --help`.
@@ -57,8 +57,9 @@ to create a visualization of actors with different action explortation rates, si
 
 ### Testing
 
-```
-python run.py -load -mode test
-```
+To watch learned agents, execute:
 
+```
+python run.py -load -mode test -actor 1 -learner 1
+```
 

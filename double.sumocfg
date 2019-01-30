@@ -7,7 +7,7 @@
 <end value="86400"/>
 </time>
 <report>
-<verbose value="true"/>
+<verbose value="false"/>
 <no-step-log value="true"/>
 </report>
 </configuration>

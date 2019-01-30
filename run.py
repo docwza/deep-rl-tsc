@@ -8,10 +8,12 @@ def parse_cl_args():
     parser.add_argument("-actor", type=int, default=os.cpu_count()-1, dest='n_actors', help='number of actor procs (parallel simulations) generating experiences, default: os.cpu_count()-1')
     parser.add_argument("-learner", type=int, default=1, dest='n_learners', help='number of learner procs (parallel simulations) producing updates, default: 1')
 
-    parser.add_argument("-sumocfg", type=str, default='net.sumocfg', dest='sumo_cfg', help='path to desired simulation configuration file, default: net.sumocfg' )
+    parser.add_argument("-sumocfg", type=str, default='double.sumocfg', dest='sumo_cfg', help='path to desired simulation configuration file, default: double.sumocfg' )
     parser.add_argument("-port", type=int, default=9000, dest='port', help='sumo port, default: 9000' )
-    parser.add_argument("-simlen", type=int, default=3600, dest='sim_len', help='length of simulation in seconds/steps')
-    parser.add_argument("-netfp", type=str, default='net.net.xml', dest='net_fp', help='path to desired simulation network file, default: net.net.xml')
+    parser.add_argument("-simlen", type=int, default=7200, dest='sim_len', help='length of simulation in seconds/steps')
+    parser.add_argument("-netfp", type=str, default='double.net.xml', dest='net_fp', help='path to desired simulation network file, default: double.net.xml')
+    parser.add_argument("-scale", type=float, default=1.0, dest='scale', help='automatic flow scaling parameter (i.e., >1.0, more vehicles, default: 1.0')
+
 
     parser.add_argument("-mode", type=str, default='train', dest='mode', help='reinforcement mode, train (agents receive updates) or test (no updates), default:train'  )
 
@@ -29,15 +31,15 @@ def parse_cl_args():
     parser.add_argument("-batch", type=int, default=16, dest='batch', help='number of samples in training batch, default: 16')
     parser.add_argument("-target", type=int, default=50, dest='target', help='target network update period relative to batch updates, default: 50')
     parser.add_argument("-updates", type=int, default=10000, dest='updates', help='total number of batch updates during training, default: 10 000' )
-    parser.add_argument("-oact", type=str, default='linear', dest='oact', help='neural network output layer activation function, default: linear')
-    parser.add_argument("-hact", type=str, default='relu', dest='hact', help='neural network hidden layer activation function, default: relu')
+    parser.add_argument("-oact", type=str, default='linear', dest='oact', help='neural network output layer activation function (tanh, sigmoid, linear), default: linear')
+    parser.add_argument("-hact", type=str, default='relu', dest='hact', help='neural network hidden layer activation function (tanh, sigmoid, linear), default: relu')
 
     parser.add_argument("-load", default=False, action='store_true', dest='load', help='load saved weights and net data from training, default: False')
     parser.add_argument("-save", default=False, action='store_true', dest='save', help='save network weights and net data after training for future use, default: False')
 
     ###n step q learning
     parser.add_argument("-nsteps", type=int, default=1, dest='n_steps', help='n-steps in experience trajectory for updates, default: 1')
-    parser.add_argument("-arepeat", type=int, default=15, dest='a_repeat', help='action repeat length (length of green phases in seconds/steps), default: 15' )
+    parser.add_argument("-arepeat", type=int, default=15, dest='a_repeat', help='action repeat length (length of actions/green phases in seconds/steps), default: 15' )
 
     ##sim params
     parser.add_argument("-vlen", type=float, default=7.5, dest='v_len', help='average vehicle length+headway for density state calculation, default: 7.5')
@@ -46,7 +48,7 @@ def parse_cl_args():
     ###minimum tsc params
     parser.add_argument("-red", type=int, default=4, dest='yellow_t', help='length of yellow change phases in seconds/steps, default: 4')
     parser.add_argument("-yellow", type=int, default=4, dest='red_t', help='length of red clearance phases in seconds/steps, default: 4')
-    parser.add_argument("-green", type=int, default=10, dest='green_t')
+    parser.add_argument("-green", type=int, default=15, dest='green_t')
     #parser.add_argument("-ming", type=int, default=10, dest='ming')
     #parser.add_argument("-maxg", type=int, default=45, dest='maxg')
 

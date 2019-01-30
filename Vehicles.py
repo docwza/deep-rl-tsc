@@ -13,31 +13,30 @@ import numpy as np
 from NetworkData import NetworkData
 
 class Vehicles():
-    def __init__(self, conn, constants, net_data, sim_len, demand):
+    def __init__(self, conn, constants, net_data, sim_len, demand, scale=None):
         self.conn = conn
         self.constants = constants
         self.v_data = None
         self.vehicles_created = 0
-
         self.net_data = net_data
-
+        ###for generating vehicles
         self.origins = self.net_data['origins']
         self.destinations = self.net_data['destinations'] 
-
         self.lane_lengths = { l:conn.lane.getLength(l) for l in conn.lane.getIDList() }
         self.lanes = [ l for l in self.net_data['lane'] ]
-
         self.add_origin_routes()
-
+        self.scale = scale
+        ###stats variacles
         self.lane_vehicles = None
         self.outflow = []
         self.start_times = {}
         self.stopped_times = {}
         self.v_edge_time = {}
         self.travel_times = {}
-
         self.t = 0
 
+        ###determine what function we run every step to 
+        ###generate vehicles into sim
         if demand == 'single':
             self.gen_vehicles = self.gen_single
         elif demand == 'dynamic':
@@ -83,9 +82,10 @@ class Vehicles():
         v_schedule = np.concatenate((v_schedule[random_shift:], v_schedule[:random_shift]))
         ###zero out the last minute for better comparisons because of random shift
         v_schedule[-60:] = 0
-        ###use this one for double network
-        #v_schedule = [ np.random.choice(self.origins, size=int(1.25*n_veh), replace = True) if n_veh > 0 else [] for n_veh in v_schedule  ]
-        v_schedule = [ np.random.choice(self.origins, size=n_veh, replace = True) if n_veh > 0 else [] for n_veh in v_schedule  ]
+        ###randomly select from origins, these are where vehicles are generated
+        v_schedule = [ np.random.choice(self.origins, size=int(self.scale*n_veh), replace = True) if n_veh > 0 else [] for n_veh in v_schedule  ]
+        #v_schedule = [ np.random.choice(self.origins, size=n_veh, replace = True) if n_veh > 0 else [] for n_veh in v_schedule  ]
+        ###fancy, just so we can call next for sequential access
         return v_schedule.__iter__() 
 
     def update(self):
@@ -96,6 +96,7 @@ class Vehicles():
         ###use code below for sumo v <= 0.32.0
         #self.v_data = self.conn.vehicle.getSubscriptionResults()
         ###use below if sumo v >= 0.32.0
+        ###subscription/batch sumo sim access is faster than API calls
         self.v_data = self.conn.vehicle.getAllSubscriptionResults()
         lane_vehicles = self.update_lane_vehicles(self.lanes)
         self.update_travel_times(self.t)
@@ -139,9 +140,7 @@ class Vehicles():
 
             ###keep track for delay
             v_lane = self.v_data[v][traci.constants.VAR_LANE_ID] 
-            #if v_lane in self.lane_data:     
             if v_lane in self.net_data['lane']:            
-                #v_edge = self.lane_data[ v_lane ]['edge']
                 v_edge = self.net_data['lane'][v_lane]['edge'] 
 
                 if v not in self.v_edge_time:

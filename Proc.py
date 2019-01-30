@@ -44,10 +44,8 @@ class ActorProc(Process):
 
         self.barrier.wait()
         ###load weights from learners
-
         for tsc in agent_networks:
             agent_networks[tsc]['online'].set_weights( self.rl_stats[tsc]['online'] )
-
 
         port = self.args.port + self.idx
         sim = SumoSim(port, self.idx, self.args.sumo_cfg)
@@ -58,7 +56,7 @@ class ActorProc(Process):
             ###run the sim until completion, pass in neural network here
             sim.run(self.net_data, self.args, self.exp_replay, agent_networks, self.eps, self.rl_stats)
 
-        print('------- finished filling exp replays, start learning... ---------')
+        print('------- finished filling exp replays, start learning ---------')
 
         self.barrier.wait()
 
@@ -119,6 +117,10 @@ class LearnerProc(Process):
         ###wait until sufficient exp in replay to start making updates
         self.barrier.wait()
 
+        ###timer for stats
+        self.last_update = time.time()
+        period = 60
+
         if self.args.mode == 'train':
             ###reset n_exp count
             for agent in self.agent_ids:
@@ -126,8 +128,8 @@ class LearnerProc(Process):
 
             while not self.finished_learning():                                                
                 for tsc in rl_agents:                                                         
+                    ###only do batch updates after something been added to exp replay
                     if self.rl_stats[tsc]['n_exp'] > 0:
-                        #print('training on '+str(tsc)+'-----')
                         rl_agents[tsc].train_batch( self.rl_stats[tsc]['max_r'])
                         self.rl_stats[tsc]['n_exp'] -= 1
                         self.rl_stats[tsc]['updates'] += 1
@@ -143,8 +145,19 @@ class LearnerProc(Process):
                         if self.rl_stats[tsc]['updates'] % self.args.target == 0:
                             ###set target to online params
                             rl_agents[tsc].set_params('target', self.rl_stats[tsc]['online'])
-                        #print('finished training on '+str(tsc)+'-----')
+                ###try stats
+                t = time.time() - self.last_update
+                if t > period:
+                    print('========= AGENT EXP PROGRESS UPDATE =====')
+                    self.print_stats()
+                    self.last_update = time.time()
         print('...end learner '+str(self.idx))
+
+    def print_stats(self):
+        agent_progress = []
+        for agent in self.agent_ids:
+            agent_progress.append( self.rl_stats[agent]['updates']/float(self.args.updates) )
+        print(str(self.agent_ids)+'\n'+str(agent_progress))
 
     def finished_learning(self):
         for agent in self.agent_ids:
