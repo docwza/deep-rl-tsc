@@ -95,4 +95,8 @@ Consult the [SUMO Wiki](http://sumo.dlr.de/wiki/Simulation_of_Urban_MObility_-_W
 
 ## Additional Resources
 
+[My PhD thesis on this topic](http://hdl.handle.net/11375/23856)
+
+[PhD thesis direct download](https://macsphere.mcmaster.ca/bitstream/11375/23856/2/genders_wade_ta_201811_deng.pdf.pdf)
+
 [Some of my other](https://scholar.google.ca/citations?user=UDIdK_wAAAAJ&hl=en&oi=ao) reinforcement learning traffic signal control research.
