@@ -6,7 +6,7 @@ Distributed deep reinforcement learning traffic signal control framework for [SU
 
 [YouTube Video Demo](https://youtu.be/Oyz2eHNmrak)
 
-This code is an improvement and extension of [published research](https://doi.org/10.1080/15472450.2018.1491003). Please cite the following reference if you use this code in your own research:
+This code is an improvement and extension of [published research](https://doi.org/10.1080/15472450.2018.1491003) along with being part of a [PhD thesis](https://macsphere.mcmaster.ca/bitstream/11375/23856/2/genders_wade_ta_201811_deng.pdf.pdf). Please cite the following reference if you use this code in your own research:
 
 ```
 @article{doi:10.1080/15472450.2018.1491003,
@@ -55,7 +55,7 @@ to create a visualization of actors with different action explortation rates, si
 
 ![Screenshot](doc/graph_actors.png)
 
-When training, optimal execution requires balancing the number of parallel actors `-actor` and learners `-learner`. A simulation with a single intersection can be left at the default settings (i.e., 1 learner and the rest actors). As the number of signalised intersections in the network increases, more learners will be required. Agents are distributed to learners in an approximately equal fashion; each learner is responsible to perform batch updates for their assigned subset of agents (i.e., a network with 13 signalised intersections and 3 learners would allocate 4, 4 and 5 intersections to the learners). Each actor is assigned an epsilon greedy exploration policy from equally spaced intervals between a random policy and a defined greedy policy `-eps 0.05` (e.g., with 4 actors and `-eps 0.05`, the actors implement one of [1.0, 0.68, 0.37, 0.05] epsilon greedy policies).
+When training, optimal execution requires balancing the number of parallel actors `-actor` and learners `-learner`. A simulation with a single intersection can be left at the default settings (i.e., 1 learner and the rest actors). As the number of signalised intersections in the network increases, more learners will be required. Agents are distributed to learners in an approximately equal fashion; each learner is responsible for performing batch updates for their assigned subset of agents (e.g., a network with 13 signalised intersections and 3 learners would allocate 4, 4 and 5 intersections to the learners). Each actor is assigned an epsilon greedy exploration policy from equally spaced intervals between a random policy and a defined greedy policy `-eps 0.05` (e.g., with 4 actors and `-eps 0.05`, the actors implement one of [1.0, 0.68, 0.37, 0.05] epsilon greedy policies).
 
 ### Testing
 
@@ -84,7 +84,7 @@ Vehicle generation is implemented in Vehicle.py class. Vehicles are generated un
 
 ### Reinforcement Learning
 
-The n-step Q-learnig algorithm is used to train agents to implement acyclic, adaptive traffic signal control. An agent's policy selects the next green phase for a fixed duration. Green phases can be selected in an acyclic manner (i.e., no cycle). The fixed duration (i.e., action repeat) of the green phase is controlled with `-arepeat 15`. Smaller action repeats enable more frequent control but are likely more difficult to learn. The agent's state is a function of the density of all incoming intersection lanes. The reward is the negative cumulative delay of all vehicles on incoming lanes. The default deep neural network is a 2 hidden layer fully-connected architecture to model the action-value function, implemented in NeuralNetwork.py.
+The n-step Q-learning algorithm is used to train agents to implement acyclic, adaptive traffic signal control. An agent's policy selects the next green phase for a fixed duration. Green phases can be selected in an acyclic manner (i.e., no cycle). The fixed duration (i.e., action repeat) of the green phase is controlled with `-arepeat 15`. Smaller action repeats enable more frequent control but are likely more difficult to learn. The agent's state is a function of the density of all incoming intersection lanes. The reward is the negative cumulative delay of all vehicles on incoming lanes. The default deep neural network is a 2 hidden layer fully-connected architecture to model the action-value function, implemented in NeuralNetwork.py.
 
 In `-mode train` the actors first execute until all experience replays are filled `-replay 10000`. Then actors continue to generate trajectories until learners perform sufficient batch updates `-updates 10000`. In `-mode test` the actors execute 1 simulation. 
 
@@ -96,7 +96,5 @@ Consult the [SUMO Wiki](http://sumo.dlr.de/wiki/Simulation_of_Urban_MObility_-_W
 ## Additional Resources
 
 [My PhD thesis on this topic](http://hdl.handle.net/11375/23856)
-
-[PhD thesis direct download](https://macsphere.mcmaster.ca/bitstream/11375/23856/2/genders_wade_ta_201811_deng.pdf.pdf)
 
 [Some of my other](https://scholar.google.ca/citations?user=UDIdK_wAAAAJ&hl=en&oi=ao) reinforcement learning traffic signal control research.
