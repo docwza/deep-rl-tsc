@@ -45,8 +45,7 @@ class TrafficSignalController(object):
             self.phase_time = duration
             self.conn.trafficlight.setRedYellowGreenState( self.id, next_phase )
             self.current_phase = next_phase
-        else:
-            self.phase_time -= 1
+        self.phase_time -= 1
 
 class RLTrafficSignalController(TrafficSignalController):
     ###implements a cycle, fixed uniform phase duration for all green phases
