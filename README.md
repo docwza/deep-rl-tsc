@@ -67,7 +67,7 @@ python run.py -load -mode test -actor 1 -learner 1
 
 ## Overview
 
-This framework takes a SUMO network simulation and develops deep reinforcement learning agents for each signalised intersection to act as optimal signal controllers. A [distributed actor/learner architecture](https://arxiv.org/abs/1803.00933) implemented with Python multiprocessing enables hardware scalability. This research implements [n-step Q-learning](https://arxiv.org/abs/1602.01783), an off-policy, valued based form of reinforcement learning. 
+This framework takes a SUMO network simulation and develops deep reinforcement learning agents for each signalised intersection to act as optimal signal controllers. A [distributed actor/learner architecture](https://arxiv.org/abs/1803.00933) implemented with Python multiprocessing enables hardware scalability. This research implements [n-step Q-learning](https://arxiv.org/abs/1602.01783), an off-policy, value-based form of reinforcement learning. 
 
 
 ### Simulation
@@ -97,4 +97,4 @@ Consult the [SUMO Wiki](http://sumo.dlr.de/wiki/Simulation_of_Urban_MObility_-_W
 
 [My PhD thesis on this topic](http://hdl.handle.net/11375/23856)
 
-[Some of my other](https://scholar.google.ca/citations?user=UDIdK_wAAAAJ&hl=en&oi=ao) reinforcement learning traffic signal control research.
+[Some of my other](https://scholar.google.ca/citations?user=UDIdK_wAAAAJ&hl=en&oi=ao) reinforcement learning traffic signal control research
