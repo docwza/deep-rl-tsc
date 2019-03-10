@@ -25,15 +25,23 @@ def graph_actor_data(data):
     for d in data_keys:
         plt.plot(np.arange(x), data[d][:x], label=d, linewidth=5.0)
 
-    #plt.ylim(0,np.amax(y_data)*1.1)
     plt.ylim(0, np.amax(y_data)*1.1)
     plt.xlim(0,x)
 
     ###titles and labels text
     plt.title('Distributed Q-learning Training Performance')
-    plt.ylabel('Episode Average Travel Time')
+    plt.ylabel('Episode Average Travel Time (s)')
     plt.xlabel('Episodes')
     plt.legend(loc='upper right', title='Agent Exploration Rates')
+
+    ###inset axes showing last few episodes
+    L = 5
+    a = plt.axes([0.4, 0.5, 0.3, 0.3])
+    for d in data_keys:
+        plt.plot(np.arange(x)[-L:], data[d][x-L:x], linewidth=5.0)
+
+    plt.xlim(np.min(np.arange(x)[-L:]), np.max(np.arange(x)[-L:]))
+    plt.title('Final Training Episodes Performance')
 
     plt.show()
 
